@@ -14,7 +14,7 @@ D列をメタフィールド定義のネームスペースとキーとする
 
 G列をメタフィールド定義のタイプとする
 
-H列をメタフィールド定義のタイプとする
+H列をメタフィールド定義の説明文とする
 
 ## 環境構築
 https://tsuzucle.com/blogs/tech-blog/requset-shopify-api-from-gas
