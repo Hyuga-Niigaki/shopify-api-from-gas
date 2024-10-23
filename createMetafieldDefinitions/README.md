@@ -3,7 +3,11 @@
 GASで動作します。
 
 # Spread sheet format：
-https://docs.google.com/spreadsheets/d/1dFnIatMtSwKwB4mmmC43NIL8dSz-TF2Y5mi90AJ0efc/edit?gid=0#gid=0
+
+| No.  | 分類             | Shopify項目名 | プロパティ名                 | Matrixifyヘッダー名（参考）                            | データ例        | タイプ                 | 利用方針               |
+|------|------------------|----------------|-----------------------------|-------------------------------------------------------|-----------------|---------------------|-----------------------|
+| 1   | Product Metafield | 商品状態       | custom.product_status | Metafield: custom.ec_product_item_status [number_integer] |  | number_integer | 商品状態を把握するため |
+| 2   | Variant Metafield | フリーエリア       | custom.free_area | Metafield: custom.free_area [multi_line_text_field] |  | multi_line_text_field | HTMLを描画する |
 
 # 概要：
 B列の値にて、商品メタフィールドか、バリアンとメタフィールドかを判別
