@@ -2,10 +2,10 @@ const API_URL = 'https://example.myshopify.com/admin/api/2024-10/graphql.json';
 const ACCESS_TOKEN = '';
 
 /**
- * メタフィールド定義を作成するメイン関数
+ * メタフィールド定義を更新するメイン関数
  */
-function createMetafieldDefinitions() {
-  const sheetName = ''
+function updateMetafieldDefinitions() {
+  const sheetName = '';
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   
   // シートの最後の行まで取得
@@ -14,7 +14,7 @@ function createMetafieldDefinitions() {
   const data = sheet.getRange(23, 2, lastRow - 23 + 1, 7).getValues(); // B ~ G列 23行 ~ 最後の行
   
   data.forEach(row => {
-    const [name, namespaceKey, type, description] = [row[0], row[2], row[1], row[5]];
+    const [name, namespaceKey, description] = [row[0], row[2], row[5]]; // IDはG列にあると仮定
     const [namespace, key] = namespaceKey.split('.'); // D列を分割
 
     // sheetNameに応じて ownerType を設定
@@ -25,35 +25,34 @@ function createMetafieldDefinitions() {
       namespace,
       key,
       description,
-      type,
       ownerType
     };
 
-    // メタフィールド定義を作成
-    console.log("metafieldDefinition", metafieldDefinition);
-    const result = createMetafieldDefinition(metafieldDefinition);
+    // メタフィールド定義を更新
+    console.log("Updating metafieldDefinition", metafieldDefinition);
+    const result = updateMetafieldDefinition(metafieldDefinition);
 
     if (result.success) {
-      Logger.log('Metafield Definition created: ' + result.data.id + ' (' + result.data.name + ')');
+      Logger.log('Metafield Definition updated: ' + result.data.id + ' (' + result.data.name + ')');
     } else {
       result.errors.forEach(error => {
-        Logger.log('Error creating metafield definition: ' + error.message);
+        Logger.log('Error updating metafield definition: ' + error.message);
       });
     }
   });
 }
 
 /**
- * メタフィールド定義をShopify APIに送信して作成
+ * メタフィールド定義をShopify APIに送信して更新
  * 
  * @param {Object} metafieldDefinition - メタフィールド定義
  * @return {Object} - API呼び出しの結果
  */
-function createMetafieldDefinition(metafieldDefinition) {
+function updateMetafieldDefinition(metafieldDefinition) {
   const query = `
-    mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
-      metafieldDefinitionCreate(definition: $definition) {
-        createdDefinition {
+    mutation UpdateMetafieldDefinition($definition: MetafieldDefinitionUpdateInput!) {
+      metafieldDefinitionUpdate(definition: $definition) {
+        updatedDefinition {
           id
           name
         }
@@ -73,7 +72,7 @@ function createMetafieldDefinition(metafieldDefinition) {
     const response = UrlFetchApp.fetch(API_URL, {
       method: 'post',
       headers: {
-        'content-Type': 'application/json',
+        'Content-Type': 'application/json',
         'X-Shopify-Access-Token': ACCESS_TOKEN
       },
       payload
@@ -81,11 +80,11 @@ function createMetafieldDefinition(metafieldDefinition) {
 
     const json = JSON.parse(response.getContentText());
     console.log(json);
-    const createdDefinition = json.data?.metafieldDefinitionCreate?.createdDefinition;
-    const userErrors = json.data?.metafieldDefinitionCreate?.userErrors;
+    const updatedDefinition = json.data?.metafieldDefinitionUpdate?.updatedDefinition;
+    const userErrors = json.data?.metafieldDefinitionUpdate?.userErrors;
 
-    if (createdDefinition) {
-      return { success: true, data: createdDefinition };
+    if (updatedDefinition) {
+      return { success: true, data: updatedDefinition };
     } else if (userErrors?.length > 0) {
       return { success: false, errors: userErrors };
     }

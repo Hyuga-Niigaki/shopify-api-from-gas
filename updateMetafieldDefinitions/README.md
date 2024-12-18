@@ -10,9 +10,6 @@ GASで動作します。
 | 2   | Variant Metafield | フリーエリア       | custom.free_area | Metafield: custom.free_area [multi_line_text_field] |  | multi_line_text_field | HTMLを描画する |
 
 # 概要：
-
-(更新できていない)
-
 B列の値にて、商品メタフィールドか、バリアンとメタフィールドかを判別
 
 C列をメタフィールド定義の名前とする
