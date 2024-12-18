@@ -1,5 +1,5 @@
 # なんだこれは：
-大量のメタフィールドを手で作ると腱鞘炎になるから、実行ボタンを押したら一括で作成してくれるプログラム。
+大量のメタフィールドを作った後に更新が入ったらめんどくさいから更新もできるようにしたやつ
 GASで動作します。
 
 # Spread sheet format：
@@ -10,6 +10,9 @@ GASで動作します。
 | 2   | Variant Metafield | フリーエリア       | custom.free_area | Metafield: custom.free_area [multi_line_text_field] |  | multi_line_text_field | HTMLを描画する |
 
 # 概要：
+
+(更新できていない)
+
 B列の値にて、商品メタフィールドか、バリアンとメタフィールドかを判別
 
 C列をメタフィールド定義の名前とする
